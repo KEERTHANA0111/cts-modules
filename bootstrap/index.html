@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap Directory & JS Example</title>
+  <!-- Link to Bootstrap CSS from local css/ folder -->
+  <link rel="stylesheet" href="bootstrap-4.0.0-dist/css/bootstrap-grid.min.css">
+</head>
+<body>
+
+  <div class="container mt-5">
+    <h1 class="text-success">Bootstrap JS Plugin Test</h1>
+    <p class="lead">Click the button to toggle the alert component (uses Bootstrap JS).</p>
+
+    <button class="btn btn-warning" type="button" data-bs-toggle="collapse" data-bs-target="#demoAlert" aria-expanded="false" aria-controls="demoAlert">
+      Toggle Alert
+    </button>
+
+    <div class="collapse mt-3" id="demoAlert">
+      <div class="alert alert-info">
+        This is a Bootstrap collapse alert using JavaScript plugin!
+      </div>
+    </div>
+  </div>
+
+  <!-- Include Bootstrap JS bundle before closing body tag -->
+  <script src="bootstrap-4.0.0-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

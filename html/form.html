@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Registration</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+    }
+    label, input, select, textarea, button, output {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    input, select, textarea {
+      padding: 6px;
+    }
+    button {
+      margin-top: 15px;
+      padding: 8px;
+    }
+    output {
+      margin-top: 15px;
+      background: #e6ffe6;
+      padding: 10px;
+      border-left: 4px solid green;
+    }
+    #clearPrefs {
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<body>
+
+  <h2>Register for City Event</h2>
+
+  <form id="eventForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Your full name" required autofocus>
+
+    <label for="eventType">Event Type:</label>
+    <select id="eventType" name="eventType" required>
+      <option value="">-- Select --</option>
+      <option>Roots & Routes Festival</option>
+      <option>BrightSide Block Party</option>
+      <option>EcoPulse Day</option>
+      <option>City Mosaic Expo</option>
+      <option>NextGen Civic Jam</option>
+      <option>Harvest Harmony Fair</option>
+    </select>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+    <label for="date">Event Date:</label>
+    <input type="date" id="date" name="date" required>
+    <button id="findLocation">📍 Find Nearby Events</button>
+    <output id="locationOutput"></output>
+
+    <div id="map" style="height: 300px; margin-top: 20px;"></div>
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" placeholder="Optional message"></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <button id="clearPrefs">Clear Preferences</button>
+
+  <output id="formOutput"></output>
+
+  <script>
+    const eventSelect = document.getElementById("eventType");
+    const output = document.getElementById("formOutput");
+
+    // Load saved preference on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedEvent = localStorage.getItem("preferredEvent");
+      if (savedEvent) {
+        eventSelect.value = savedEvent;
+        output.innerHTML = `🎯 Your preferred event is <strong>${savedEvent}</strong>. You can change it anytime.`;
+      }
+    });
+
+    // Save event preference on change
+    eventSelect.addEventListener("change", () => {
+      const selected = eventSelect.value;
+      if (selected) {
+        localStorage.setItem("preferredEvent", selected);
+      }
+    });
+
+    // On form submit
+    document.getElementById("eventForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const eventType = eventSelect.value;
+      const date = document.getElementById("date").value;
+
+      // Save session data
+      sessionStorage.setItem("lastEvent", eventType);
+
+      output.innerHTML = `✅ Thank you, <strong>${name}</strong>! You’ve registered for <em>${eventType}</em> on <strong>${date}</strong>.`;
+    });
+
+    // Clear both storages
+    document.getElementById("clearPrefs").addEventListener("click", () => {
+      localStorage.clear();
+      sessionStorage.clear();
+      alert("Preferences cleared.");
+      location.reload();
+    });
+
+    // Warn user if they try to leave with filled form
+    window.addEventListener("beforeunload", (e) => {
+      if (document.getElementById("name").value || eventSelect.value || document.getElementById("email").value) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    });
+      const locationOutput = document.getElementById("locationOutput");
+  let mapInitialized = false;
+  let map;
+
+  document.getElementById("findLocation").addEventListener("click", function () {
+    if (navigator.geolocation) {
+      locationOutput.textContent = "📡 Locating...";
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          locationOutput.innerHTML = `📍 Your Coordinates:<br><strong>Latitude:</strong> ${lat.toFixed(5)}<br><strong>Longitude:</strong> ${lon.toFixed(5)}`;
+
+          // Initialize map
+          if (!mapInitialized) {
+            map = L.map('map').setView([lat, lon], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            mapInitialized = true;
+          } else {
+            map.setView([lat, lon], 14);
+          }
+
+          // Add marker for user's location
+          L.marker([lat, lon]).addTo(map).bindPopup("📍 You are here").openPopup();
+
+          // Example: Add dummy nearby events
+          const events = [
+            { name: "EcoPulse Day", lat: lat + 0.005, lon: lon + 0.004 },
+            { name: "City Mosaic Expo", lat: lat - 0.004, lon: lon - 0.006 },
+            { name: "NextGen Civic Jam", lat: lat + 0.003, lon: lon - 0.005 }
+          ];
+
+          events.forEach(ev => {
+            L.marker([ev.lat, ev.lon]).addTo(map)
+              .bindPopup(`📍 <strong>${ev.name}</strong>`);
+          });
+        },
+        (error) => {
+          locationOutput.textContent = "❌ Unable to retrieve your location.";
+        }
+      );
+    } else {
+      locationOutput.textContent = "❌ Geolocation is not supported by your browser.";
+    }
+  });
+  </script>
+
+</body>
+</html>

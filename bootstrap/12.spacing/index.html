@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Spacing Utilities</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .section {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .pricing-item {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            padding: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Spacing Utilities</h2>
+
+        <h3>Applying Margin and Padding</h3>
+        <div class="section m-3 mt-4 p-2 py-5">
+            <p> sample text.</p>
+        </div>
+
+        <h3>Pricing Section</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="pricing-item mb-3">
+                    <h4>Basic</h4>
+                    <p class="mb-2">$9.99/month</p>
+                    <button class="btn btn-primary">Sign Up</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-item mb-3 pt-3 pb-3">
+                    <h4>Pro</h4>
+                    <p class="mb-2">$19.99/month</p>
+                    <button class="btn btn-success">Upgrade Now</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-item mb-3 mt-5">
+                    <h4>Enterprise</h4>
+                    <p class="mb-2">$49.99/month</p>
+                    <button class="btn btn-info">Contact Us</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

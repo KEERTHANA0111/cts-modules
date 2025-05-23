@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Flexbox Utilities</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .nav-item {
+            padding: 5px 10px;
+            border: 1px solid #dee2e6;
+            margin-right: 5px;
+        }
+        .card {
+            border: 1px solid #dee2e6;
+            padding: 20px;
+        }
+        .card-item {
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2> Responsive Flexbox Utilities</h2>
+
+        <h3> Responsive Navbar</h3>
+        <nav class="navbar d-flex flex-column flex-md-row align-items-center">
+            <a class="navbar-brand" href="#">My Website</a>
+            <div class="d-flex flex-column flex-md-row">
+                <a class="nav-item" href="#">Home</a>
+                <a class="nav-item" href="#">About</a>
+                <a class="nav-item" href="#">Services</a>
+                <a class="nav-item" href="#">Contact</a>
+            </div>
+        </nav>
+
+        <h3>  Card Layout</h3>
+        <div class="card d-flex justify-content-between align-items-center">
+            <div class="card-item">Item 1</div>
+            <div class="card-item">Item 2</div>
+            <div class="card-item">Item 3</div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

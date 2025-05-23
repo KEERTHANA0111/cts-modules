@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Event Interaction Demo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+    input, select, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    #phoneError {
+      color: red;
+      font-size: 12px;
+    }
+    #freeStatus {
+      margin-top: 8px;
+      font-weight: bold;
+      color: green;
+    }
+    #feedbackCount {
+      font-style: italic;
+      font-size: 12px;
+      margin-top: 4px;
+      color: #555;
+    }
+    #enlargeImg {
+      width: 200px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #enlargeImg.enlarged {
+      width: 400px;
+      border: 3px solid #444;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Event Interaction Demo</h2>
+
+  <!-- Phone Number with onblur validation -->
+  <label for="phone">Phone Number (10 digits):</label>
+  <input type="text" id="phone" placeholder="Enter phone number" onblur="validatePhone()" />
+  <div id="phoneError"></div>
+
+  <!-- Dropdown with onchange to display if event is free -->
+  <label for="eventSelect">Choose an Event:</label>
+  <select id="eventSelect" onchange="checkIfFree()">
+    <option value="">--Select an event--</option>
+    <option value="Roots & Routes Festival" data-free="no">Roots & Routes Festival</option>
+    <option value="BrightSide Block Party" data-free="yes">BrightSide Block Party</option>
+    <option value="EcoPulse Day" data-free="yes">EcoPulse Day</option>
+    <option value="City Mosaic Expo" data-free="no">City Mosaic Expo</option>
+  </select>
+  <div id="freeStatus"></div>
+
+  <!-- Feedback Textarea with key event handlers -->
+  <label for="feedback">Your Feedback:</label>
+  <textarea id="feedback" rows="4" placeholder="Type your feedback..." onkeydown="countChars()" onkeyup="countChars()"></textarea>
+  <div id="feedbackCount">0 characters typed</div>
+
+  <!-- Submit button with onclick -->
+  <button type="button" onclick="submitFeedback()">Submit Feedback</button>
+
+  <!-- Image with ondblclick to enlarge -->
+  <h3>Double click image to enlarge</h3>
+  <img
+    id="enlargeImg"
+    src="https://via.placeholder.com/200"
+    alt="Sample"
+    ondblclick="toggleImageSize()"
+  />
+
+  <script>
+    // Validate phone on blur
+    function validatePhone() {
+      const phoneInput = document.getElementById('phone');
+      const phoneError = document.getElementById('phoneError');
+      const phone = phoneInput.value.trim();
+      const phoneRegex = /^\d{10}$/;
+
+      if (!phoneRegex.test(phone)) {
+        phoneError.textContent = "❗ Please enter a valid 10-digit phone number.";
+      } else {
+        phoneError.textContent = "";
+      }
+    }
+
+    // onchange handler to check if event is free
+    function checkIfFree() {
+      const select = document.getElementById('eventSelect');
+      const freeStatus = document.getElementById('freeStatus');
+      const selectedOption = select.options[select.selectedIndex];
+
+      if (!selectedOption.value) {
+        freeStatus.textContent = '';
+        return;
+      }
+
+      const isFree = selectedOption.getAttribute('data-free') === 'yes';
+      freeStatus.textContent = isFree ? "🎉 This event is FREE!" : "💲 This event has a fee.";
+    }
+
+    // key events in feedback textarea for counting characters
+    function countChars() {
+      const feedback = document.getElementById('feedback');
+      const feedbackCount = document.getElementById('feedbackCount');
+      feedbackCount.textContent = `${feedback.value.length} characters typed`;
+    }
+
+    // onclick for submit button
+    function submitFeedback() {
+      const phoneError = document.getElementById('phoneError');
+      if (phoneError.textContent) {
+        alert("Please fix errors before submitting.");
+        return;
+      }
+
+      const phone = document.getElementById('phone').value.trim();
+      const eventSelected = document.getElementById('eventSelect').value;
+      const feedback = document.getElementById('feedback').value.trim();
+
+      if (!phone || !eventSelected) {
+        alert("Please fill in your phone number and select an event.");
+        return;
+      }
+
+      alert(`Feedback submitted!\nPhone: ${phone}\nEvent: ${eventSelected}\nFeedback: ${feedback || "No feedback"}`);
+    }
+
+    // ondblclick to enlarge image
+    function toggleImageSize() {
+      const img = document.getElementById('enlargeImg');
+      img.classList.toggle('enlarged');
+    }
+  </script>
+</body>
+</html>

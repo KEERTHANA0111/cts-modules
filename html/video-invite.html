@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Event Video Invite</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 480px;
+      margin: 20px auto;
+      padding: 10px;
+      text-align: center;
+    }
+    #videoInviteMsg {
+      margin-top: 12px;
+      font-size: 18px;
+      color: #2c7;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎉 You're Invited!</h1>
+  
+  <video id="inviteVideo" width="480" controls>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  
+  <div id="videoInviteMsg"></div>
+
+  <script>
+    // Show message when video is ready to play
+    document.getElementById('inviteVideo').addEventListener('canplay', function() {
+      document.getElementById('videoInviteMsg').textContent = "🎬 Video is ready! Enjoy the invite.";
+    });
+
+    // Warn user if trying to leave (example: you could expand this if form added)
+    window.addEventListener('beforeunload', function(e) {
+      // Just an example warning, remove or customize as needed
+      e.preventDefault();
+      e.returnValue = '';
+    });
+  </script>
+
+</body>
+</html>
